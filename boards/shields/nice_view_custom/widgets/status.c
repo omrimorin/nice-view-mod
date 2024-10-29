@@ -105,9 +105,12 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Draw profile name if BLE and connected
     if (state->selected_endpoint.transport == ZMK_TRANSPORT_BLE && 
         state->active_profile_connected) {
-        char *name = zmk_ble_active_profile_name();
-        if (name != NULL) {
-            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, name);
+        char *profile_names[] = {"Work", "iPhone", "iPad", "Steam Deck", "Studio"};
+        char text[10] = {};
+        
+        if (state->active_profile_index < 5) {
+            strncpy(text, profile_names[state->active_profile_index], sizeof(text) - 1);
+            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
         }
     }
 
