@@ -33,6 +33,8 @@ struct output_status_state {
     int active_profile_index;
     bool active_profile_connected;
     bool active_profile_bonded;
+    const char *profile_name;
+
 };
 
 struct layer_status_state {
@@ -44,13 +46,6 @@ struct wpm_status_state {
     uint8_t wpm;
 };
 
-struct status_state {
-    struct zmk_endpoint_instance selected_endpoint;
-    int active_profile_index;
-    bool active_profile_connected;
-    bool active_profile_bonded;
-    const char *profile_name;
-};
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 0);
@@ -217,7 +212,7 @@ static void set_output_status(struct zmk_widget_status *widget,
     widget->state.active_profile_index = state->active_profile_index;
     widget->state.active_profile_connected = state->active_profile_connected;
     widget->state.active_profile_bonded = state->active_profile_bonded;
-    widget->state.profile_name = zmk_ble_active_profile_name();
+    widget->state.profile_name = state->profile_name;
 
     draw_top(widget->obj, widget->cbuf, &widget->state);
     draw_middle(widget->obj, widget->cbuf2, &widget->state);
@@ -234,6 +229,7 @@ static struct output_status_state output_status_get_state(const zmk_event_t *_eh
         .active_profile_index = zmk_ble_active_profile_index(),
         .active_profile_connected = zmk_ble_active_profile_is_connected(),
         .active_profile_bonded = !zmk_ble_active_profile_is_open(),
+        .profile_name = zmk_ble_active_profile_name(),
     };
 }
 
