@@ -33,8 +33,6 @@ struct output_status_state {
     int active_profile_index;
     bool active_profile_connected;
     bool active_profile_bonded;
-    const char *profile_name;
-
 };
 
 struct layer_status_state {
@@ -99,16 +97,20 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
     lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_unscii_8, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
 
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw profile name
-    if (state->profile_name != NULL) {
-        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->profile_name);
-    } else {
-        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, "No Profile");
+    // Draw profile address if BLE and connected
+    if (state->selected_endpoint.transport == ZMK_TRANSPORT_BLE && 
+        state->active_profile_connected) {
+        bt_addr_le_t *addr = zmk_ble_active_profile_addr();
+        if (addr != NULL) {
+            char addr_str[BT_ADDR_LE_STR_LEN];
+            bt_addr_le_to_str(addr, addr_str, sizeof(addr_str));
+            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, addr_str);
+        }
     }
 
     // Rotate canvas
@@ -182,7 +184,6 @@ static void set_output_status(struct zmk_widget_status *widget,
     widget->state.active_profile_index = state->active_profile_index;
     widget->state.active_profile_connected = state->active_profile_connected;
     widget->state.active_profile_bonded = state->active_profile_bonded;
-    widget->state.profile_name = state->profile_name;
 
     draw_top(widget->obj, widget->cbuf, &widget->state);
     draw_middle(widget->obj, widget->cbuf2, &widget->state);
@@ -199,7 +200,6 @@ static struct output_status_state output_status_get_state(const zmk_event_t *_eh
         .active_profile_index = zmk_ble_active_profile_index(),
         .active_profile_connected = zmk_ble_active_profile_is_connected(),
         .active_profile_bonded = !zmk_ble_active_profile_is_open(),
-        .profile_name = zmk_ble_active_profile_name(),
     };
 }
 
