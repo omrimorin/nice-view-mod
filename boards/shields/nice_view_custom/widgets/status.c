@@ -174,9 +174,7 @@ static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
         lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
     } else {
-        char test_text[10] = {};
-        sprintf(test_text, "TEST");
-        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, test_text);
+        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, state->layer_label);
     }
 
     // Rotate canvas
@@ -224,6 +222,8 @@ static void set_output_status(struct zmk_widget_status *widget,
     widget->state.active_profile_index = state->active_profile_index;
     widget->state.active_profile_connected = state->active_profile_connected;
     widget->state.active_profile_bonded = state->active_profile_bonded;
+    widget->state.active_profile_name = state->active_profile_name;
+    widget->state.profiles_count = state->profiles_count;
 
     draw_top(widget->obj, widget->cbuf, &widget->state);
     draw_middle(widget->obj, widget->cbuf2, &widget->state);
