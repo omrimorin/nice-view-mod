@@ -126,6 +126,9 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
 static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
+
 
     lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, state->active_profile_name);
 
