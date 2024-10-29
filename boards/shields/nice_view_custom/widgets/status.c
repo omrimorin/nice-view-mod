@@ -35,8 +35,6 @@ struct output_status_state {
     bool active_profile_connected;
     bool active_profile_bonded;
     const char *active_profile_name;
-    uint8_t profiles_count;
-    struct zmk_ble_profile profiles[CONFIG_BT_MAX_CONN];
 };
 
 struct layer_status_state {
@@ -129,28 +127,8 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
     lv_obj_t *canvas = lv_obj_get_child(widget, 1);
 
-    lv_draw_rect_dsc_t rect_black_dsc;
-    init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
-    lv_draw_rect_dsc_t rect_white_dsc;
-    init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
-    lv_draw_label_dsc_t label_dsc;
-    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
+    lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, state->active_profile_name);
 
-    // Fill background
-    lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
-
-    // Draw profile numbers
-    char profile_text[4] = {};
-    for (int i = 0; i < state->profiles_count; i++) {
-        if (i == state->active_profile_index) {
-            // Draw highlight box for active profile
-            lv_canvas_draw_rect(canvas, i * 17, 0, 16, 20, &rect_white_dsc);
-            lv_canvas_draw_rect(canvas, i * 17 + 1, 1, 14, 18, &rect_black_dsc);
-        }
-        
-        snprintf(profile_text, sizeof(profile_text), "%d", i + 1);
-        lv_canvas_draw_text(canvas, i * 17, 0, 16, &label_dsc, profile_text);
-    }
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
 }
@@ -223,7 +201,6 @@ static void set_output_status(struct zmk_widget_status *widget,
     widget->state.active_profile_connected = state->active_profile_connected;
     widget->state.active_profile_bonded = state->active_profile_bonded;
     widget->state.active_profile_name = state->active_profile_name;
-    widget->state.profiles_count = state->profiles_count;
 
     draw_top(widget->obj, widget->cbuf, &widget->state);
     draw_middle(widget->obj, widget->cbuf2, &widget->state);
