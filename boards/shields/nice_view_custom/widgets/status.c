@@ -102,14 +102,12 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     // Fill background
     lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc);
 
-    // Draw profile address if BLE and connected
+    // Draw profile name if BLE and connected
     if (state->selected_endpoint.transport == ZMK_TRANSPORT_BLE && 
         state->active_profile_connected) {
-        bt_addr_le_t *addr = zmk_ble_active_profile_addr();
-        if (addr != NULL) {
-            char addr_str[BT_ADDR_LE_STR_LEN];
-            bt_addr_le_to_str(addr, addr_str, sizeof(addr_str));
-            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, addr_str);
+        char *name = zmk_ble_active_profile_name();
+        if (name != NULL) {
+            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, name);
         }
     }
 
