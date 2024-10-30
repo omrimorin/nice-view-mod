@@ -122,8 +122,10 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
         char name = zmk_ble_active_profile_name();
         
         if (state->active_profile_index < 5) {
-            strncpy(text, profile_names[state->active_profile_index], sizeof(text) - 1);
-            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, name);
+            // strncpy(text, profile_names[state->active_profile_index], sizeof(text) - 1);
+            // strcat(text, " ");
+            strcat(text, name);
+            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
         }
     }
 
