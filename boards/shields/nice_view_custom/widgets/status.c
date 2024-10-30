@@ -100,11 +100,11 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
     lv_draw_label_dsc_t label_dsc_index;
     init_label_dsc(&label_dsc_index, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
 
-    lv_canvas_draw_rect(canvas, 0, 0, 20, 14, &rect_black_dsc_index);
+    lv_canvas_draw_rect(canvas, 0, 0, CANVAS_SIZE, CANVAS_SIZE, &rect_black_dsc_index);
 
     char index_text[3];
     sprintf(index_text, "%d", state->active_profile_index + 1);
-    lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc_index, index_text);
+    lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc_index, index_text);
 
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
