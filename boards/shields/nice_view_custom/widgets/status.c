@@ -89,11 +89,11 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     // Draw profile index
     lv_draw_label_dsc_t label_dsc_index;
-    init_label_dsc(&label_dsc_index, LVGL_FOREGROUND, &lv_font_montserrat_14, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc_index, LVGL_FOREGROUND, &lv_font_montserrat_20, LV_TEXT_ALIGN_CENTER);
 
     char index_text[3];
-    sprintf(index_text, "#%i", state->active_profile_index + 1);
-    lv_canvas_draw_text(canvas, 13, 25, 68, &label_dsc_index, index_text);
+    sprintf(index_text, "%i", state->active_profile_index + 1);
+    lv_canvas_draw_text(canvas, 0, 25, CANVAS_SIZE, &label_dsc_index, index_text);
 
 
     // Rotate canvas
