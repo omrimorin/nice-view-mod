@@ -46,9 +46,9 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Draw battery
     draw_battery(canvas, state);
 
-    // // Draw output status
-    // lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc,
-    //                     state->connected ? LV_SYMBOL_WIFI : LV_SYMBOL_CLOSE);
+    // Draw output status
+    lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc,
+                        state->connected ? LV_SYMBOL_WIFI : LV_SYMBOL_CLOSE);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);

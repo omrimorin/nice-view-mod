@@ -89,7 +89,7 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
     // Draw profile index
     lv_draw_label_dsc_t label_dsc_index;
-    init_label_dsc(&label_dsc_index, LVGL_FOREGROUND, &lv_font_montserrat_18, LV_TEXT_ALIGN_CENTER);
+    init_label_dsc(&label_dsc_index, LVGL_FOREGROUND, &lv_font_montserrat_26, LV_TEXT_ALIGN_CENTER);
 
     char index_text[3];
     sprintf(index_text, "%i", state->active_profile_index + 1);
