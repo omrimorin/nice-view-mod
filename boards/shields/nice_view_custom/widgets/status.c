@@ -119,10 +119,11 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
         state->active_profile_connected) {
         char *profile_names[] = {"Work", "iPhone", "iPad", "Steam Deck", "Studio"};
         char text[10] = {};
+        char name = zmk_ble_active_profile_name();
         
         if (state->active_profile_index < 5) {
             strncpy(text, profile_names[state->active_profile_index], sizeof(text) - 1);
-            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
+            lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, name);
         }
     }
 
