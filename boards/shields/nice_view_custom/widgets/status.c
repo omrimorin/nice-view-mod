@@ -116,7 +116,7 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
     // Draw profile name if BLE and connected
     if (state->selected_endpoint.transport == ZMK_TRANSPORT_BLE && 
-        state->active_profile_connected) {
+        state->active_profile_bonded) {
         char *profile_names[] = {"Work", "iPhone", "iPad", "Steam Deck", "Studio"};
         char text[10] = {};
         
@@ -124,6 +124,8 @@ static void draw_middle(lv_obj_t *widget, lv_color_t cbuf[], const struct status
             strncpy(text, profile_names[state->active_profile_index], sizeof(text) - 1);
             lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, text);
         }
+    } else {
+        lv_canvas_draw_text(canvas, 0, 5, 68, &label_dsc, "No Profile");
     }
 
     // Rotate canvas
