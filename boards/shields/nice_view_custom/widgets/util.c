@@ -8,6 +8,9 @@
 #include <zephyr/kernel.h>
 #include "util.h"
 
+LV_FONT_DECLARE(lv_font_montserrat_14);
+
+
 LV_IMG_DECLARE(bolt);
 
 void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
