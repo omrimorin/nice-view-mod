@@ -8,8 +8,6 @@
 #include <zephyr/kernel.h>
 #include "util.h"
 
-LV_FONT_DECLARE(lv_font_montserrat_14);
-
 
 LV_IMG_DECLARE(bolt);
 
